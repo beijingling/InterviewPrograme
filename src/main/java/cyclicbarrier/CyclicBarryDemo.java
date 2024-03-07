@@ -20,9 +20,13 @@ public class CyclicBarryDemo {
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
 				matrix[i][j] = ThreadLocalRandom.current().nextFloat();
+				// ThreadLocalRandom 生成真随机数的原理是获取当前对象的地址，传入random对象中作为种子seed
+				// 这样每个线程调用时都是不同的对象地址，从而参数真随机数
 			}
 		}
 		long during = System.currentTimeMillis() - time;
 		System.out.println("single thread during :" + during);
+		// 通过2种方式的对比，基本事实：多线程的速度比单线程的速度快。
+		// 循环屏障的次数越多，完成整个任务的时间越长
 	}
 }
