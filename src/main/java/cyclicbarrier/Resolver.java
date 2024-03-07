@@ -30,7 +30,7 @@ public class Resolver {
 			Thread td = new Thread(new Worker(i, data));
 			td.start();
 			ths.add(td);
-			// 不能在这里进行 td.join();因为此时join表示主线程需要等待新线程完成再进行，而新新城td此时正在await,
+			// 不能在这里进行 td.join();因为此时join表示主线程需要等待新线程完成再进行，而新线程td此时正在await,
 			// 导致主线程无法执行后面的代码
 		}
 		long time = System.currentTimeMillis();
@@ -42,6 +42,9 @@ public class Resolver {
 				// 使当前线程进入等待队列
 				// 等待的对象是 t 对象的 monitor
 				// 使主线程在每个子线程中进行等待。
+				//=============================
+				// join 的工作原理是 判断线程是否  活的(已启动，并且没有death 死了)
+				// 如果是 活的，那么调用线程等待，否则调用线程继续执行
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
